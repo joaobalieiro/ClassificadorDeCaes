@@ -112,17 +112,35 @@ print("\n" + "=" * 60)
 print("FIM DA INSPECAO DOS DADOS")
 print("=" * 60)
 
+train_labels = loadmat(r'''C:\\Users\\fonso\\Downloads\\projetosGitHub\\projetoCaes\\dataset\\train_data.mat''')['labels']
+test_labels = loadmat(r'''C:\\Users\\fonso\\Downloads\\projetosGitHub\\projetoCaes\\dataset\\test_data.mat''')['labels']
+
 # define arrays numpy para construir o DataFrame
 def mat_para_df(caminho_arquivo, rotulo_estrutura):
     matfile = loadmat(caminho_arquivo)
-
+    
     lista_arquivos = matfile[rotulo_estrutura][0][0][0]
-    lista_anotacoes = matfile[rotulo_estrutura][0][0][1]
     labels = matfile[rotulo_estrutura][0][0][2]
-    fg_id = matfile[rotulo_estrutura][0][0][3]
 
-    dados = np.array([lista_anotacoes, labels, fg_id])
+    df = pd.DataFrame({
+        "arquivo": lista_arquivos.flatten(),
+        "label": labels.flatten()
+    })
 
-    df = pd.DataFrame(dados)
     return df
 
+def carregar_imagem(caminho_img, tamanho=(224, 224)):
+    img = Image.open(caminho_img).convert("RGB")
+    img = img.resize(tamanho)
+    return np.array(img)
+
+def construir_dataset(lista_arquivos, labels, raiz_imagens):
+    X, y = [], []
+
+    for arquivo, label in zip(lista_arquivos.flatten(), labels.flatten()):
+        caminho = os.path.join(raiz_imagens, arquivo)
+        if os.path.exists(caminho):
+            X.append(carregar_imagem(caminho))
+            y.append(label)
+
+    return np.array(X), np.array(y)
