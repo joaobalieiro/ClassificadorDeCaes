@@ -26,7 +26,7 @@ python vgg_model_projetoCaes.py --root_projeto "<CAMINHO_DO_PROJETO>" \
   --images_subdir "dataset/images" --dataset_subdir "dataset" \
   --criar_splits --limpar_splits --epochs 10 --batch_size 32
 
-### Fine-tuning
+Fine-tuning
 python vgg_model_projetoCaes.py --root_projeto "<CAMINHO_DO_PROJETO>" \
   --images_subdir "dataset/images" --dataset_subdir "dataset" \
   --fine_tune --fine_tune_epochs 5 --fine_tune_at 15
