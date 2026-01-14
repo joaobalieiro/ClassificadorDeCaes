@@ -20,7 +20,6 @@ Neste projeto eu construí um pipeline **reprodutível** para treinar e avaliar 
 
 ## Como rodar
 
-### Treinar (criando splits do zero)
 ```bash
 python vgg_model_projetoCaes.py --root_projeto "<CAMINHO_DO_PROJETO>" \
   --images_subdir "dataset/images" --dataset_subdir "dataset" \
